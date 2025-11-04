@@ -7,13 +7,25 @@
  */
 public class CalcEngine
 {
-    // Put instance variables here.
+    private int displayValue;
+        // The previous operator typed (+ or -).
+    private char previousOperator;
+        // The left operand to previousOperator.
+    private int leftOperand;
+    
+    private int previousOperand;
     
     /**
      * Create a CalcEngine instance.
      */
     public CalcEngine()
     {
+        displayValue = 0;
+        previousOperator = ' ';
+        leftOperand = 0;
+        System.out.println("Display Value: " + displayValue);
+        System.out.println("Previous Operator: " + previousOperator);
+        System.out.println("Left Operand: " + leftOperand);
     }
 
     /**
@@ -22,7 +34,7 @@ public class CalcEngine
      */
     public int getDisplayValue()
     {
-        return 0;
+        return displayValue;
     }
 
     /**
@@ -31,6 +43,9 @@ public class CalcEngine
      */
     public void numberPressed(int number)
     {
+        System.out.println("numberPressed called with: " + number);
+        displayValue = displayValue * 10 + number;
+        reportState("end of numberPressed");
     }
 
     /**
@@ -38,6 +53,11 @@ public class CalcEngine
      */
     public void plus()
     {
+        System.out.println("minus called");
+        applyPreviousOperator();
+        previousOperator = '+';
+        displayValue = 0;
+        reportState("end of plus");
     }
 
     /**
@@ -45,6 +65,18 @@ public class CalcEngine
      */
     public void minus()
     {
+        System.out.println("minus called");
+        applyPreviousOperator();
+        if(previousOperator == '-'){
+            previousOperator = '+';
+            leftOperand = previousOperand;
+        }
+        if(previousOperator == ' '){
+            previousOperator = '-';
+            leftOperand = previousOperand;
+        }
+        displayValue = 0;
+        reportState("end of minus");
     }
     
     /**
@@ -52,6 +84,20 @@ public class CalcEngine
      */
     public void equals()
     {
+        System.out.println("equals called");
+        if(previousOperator == '+') {
+            displayValue = leftOperand + displayValue;
+        }
+        
+        if(previousOperator == ' ') {
+            displayValue = displayValue;
+        }
+        
+        if(previousOperator == '-') {
+            displayValue = leftOperand - displayValue;
+        }
+        leftOperand = 0;
+        reportState("end of equals");
     }
 
     /**
@@ -59,6 +105,10 @@ public class CalcEngine
      */
     public void clear()
     {
+        displayValue = 0;
+        leftOperand = 0;
+        previousOperator = ' ';
+        previousOperand = 0;
     }
 
     /**
@@ -67,7 +117,7 @@ public class CalcEngine
      */
     public String getTitle()
     {
-        return "";
+        return "Super Calculator";
     }
 
     /**
@@ -76,7 +126,7 @@ public class CalcEngine
      */
     public String getAuthor()
     {
-        return "";
+        return "Hacker T. Largebrain";
     }
 
     /**
@@ -85,6 +135,31 @@ public class CalcEngine
      */
     public String getVersion()
     {
-        return "";
+        return "version 0.2";
+    }
+    
+    private void applyPreviousOperator()
+    {
+        System.out.println("applyPreviousOperator called");
+        if(previousOperator == '+') {
+            leftOperand += displayValue;
+            previousOperand = leftOperand;
+        }
+        else if(previousOperator == '-') {
+            leftOperand -= displayValue;
+            previousOperand = leftOperand;
+        }
+        else {
+            // There was no preceding operator.
+            leftOperand = displayValue;
+            previousOperand = leftOperand;
+        }
+        reportState("end of applyPreviousOperator");
+    }
+    public void reportState(String where)
+    {
+        System.out.println("displayValue: " + displayValue +
+                           " leftOperand: " + leftOperand +
+                           " previousOperator: " + previousOperator + "previousOperand: " + previousOperand + where);
     }
 }

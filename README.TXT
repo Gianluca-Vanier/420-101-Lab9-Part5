@@ -15,4 +15,13 @@ This project is part of the material for the book
    Objects First with Java - A Practical Introduction using BlueJ
    Seventh edition
    David J. Barnes and Michael Kölling
+   
+   
+   
+   method called        diplayvalue         leftoperand         previousoperator        previousoperand
+   clear()              0                   0                   ' '                     0
+   numberpressed(1)     1                   0                   ' '                     0
+   minus()              0                   1                   '-'                     1
+   numberpressed(1)     1                   1                   '-'                     1
+   equals()             0                   0                   '-'                     1
 
