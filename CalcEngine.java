@@ -71,7 +71,7 @@ public class CalcEngine
             previousOperator = '+';
             leftOperand = previousOperand;
         }
-        if(previousOperator == ' '){
+        else{
             previousOperator = '-';
             leftOperand = previousOperand;
         }
